@@ -18,4 +18,20 @@ describe("起動時に、直前に音声に合成したテキストと、音声�
     const synthesizedFilename = screen.getByTestId("synthesizedFilename");
     expect(synthesizedFilename).toBeInTheDocument();
   });
+
+  test("splish.jsonがない場合には、テキストとファイル名とも''にを設定する。", () => {
+    // Arrange
+    render(<App />);
+
+    // Act
+
+    // Assert
+    // テキストに""が設定されている
+    const synthesizedText = screen.getByTestId("synthesizedText");
+    expect(synthesizedText.textContent).toBe("");
+
+    // ファイル名に""が設定されている
+    const synthesizedFilename = screen.getByTestId("synthesizedFilename");
+    expect(synthesizedFilename.textContent).toBe("");
+  });
 });
