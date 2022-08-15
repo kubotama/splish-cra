@@ -1,6 +1,6 @@
 export declare global {
   interface Window {
-    myAPI: {
+    splish: {
       counter: (count: number) => number;
     };
   }
