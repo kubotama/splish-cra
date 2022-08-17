@@ -1,6 +1,7 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 import * as path from "path";
 import * as url from "url";
+import * as fs from "fs";
 
 const createWindow = () => {
   const win = new BrowserWindow({
@@ -21,9 +22,19 @@ const createWindow = () => {
 
   win.loadURL(appURL);
 
-  if (!app.isPackaged) {
-    win.webContents.openDevTools();
-  }
+  // if (!app.isPackaged) {
+  //   win.webContents.openDevTools();
+  // }
+
+  ipcMain.handle(
+    "getSynthesizedInfo",
+    async (_event: Electron.IpcMainInvokeEvent) => {
+      const synthesizedInfo = fs.readFileSync("splish.json", {
+        encoding: "utf8",
+      });
+      return JSON.parse(synthesizedInfo);
+    }
+  );
 };
 
 app.on("window-all-closed", () => {
@@ -36,3 +47,8 @@ app.whenReady().then(() => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
 });
+
+export type SynthesizedInfo = {
+  text: string;
+  filename: string;
+};
