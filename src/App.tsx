@@ -19,6 +19,7 @@ function App() {
     <div className="App">
       <header className="App-header">SPLISH</header>
       <textarea
+        className="synthesizedText"
         data-testid="synthesizedText"
         defaultValue={synthesizedText}
       ></textarea>
