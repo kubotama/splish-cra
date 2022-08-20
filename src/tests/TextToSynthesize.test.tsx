@@ -27,7 +27,9 @@ describe("入力したテキストから音声に合成する。", () => {
     const inputText = screen.getByTestId("inputText");
     expect(inputText).toBeVisible();
 
-    // TODO: 合成ボタンが表示されている
+    // 合成ボタンが表示されている
+    const synthesizeButton = screen.getByTestId("synthesizeButton");
+    expect(synthesizeButton).toBeVisible();
   });
 
   test("テキストの入力エリアに文字列が入力されていないときは合成ボタンが無効である。", () => {
