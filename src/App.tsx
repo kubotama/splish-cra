@@ -18,6 +18,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">SPLISH</header>
+      <textarea data-testid="inputText" />
       <textarea
         className="synthesizedText"
         data-testid="synthesizedText"
