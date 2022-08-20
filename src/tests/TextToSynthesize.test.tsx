@@ -33,7 +33,24 @@ describe("入力したテキストから音声に合成する。", () => {
   });
 
   test("テキストの入力エリアに文字列が入力されていないときは合成ボタンが無効である。", () => {
-    // TODO: テキストの入力エリアに文字列が入力されていないときは合成ボタンが無効である。
+    // Arrange
+    mockSplishIpc.getSynthesizedInfo.mockResolvedValue({
+      text: "",
+      filename: "",
+    });
+
+    // Act
+    // eslint-disable-next-line testing-library/no-unnecessary-act
+    act(() => {
+      render(<App />);
+    });
+
+    // Assert
+    // テキストの入力エリアに文字列が入力されていないときは合成ボタンが無効である。
+    const inputText = screen.getByTestId("inputText");
+    expect(inputText).toHaveValue("");
+    const synthesizeButton = screen.getByTestId("synthesizeButton");
+    expect(synthesizeButton).toBeDisabled();
   });
 
   test("テキストの入力エリアに文字列が入力されているときは合成ボタンが有効である。", () => {
