@@ -19,7 +19,11 @@ function App() {
     <div className="App">
       <header className="App-header">SPLISH</header>
       <textarea className="inputText" data-testid="inputText" />
-      <button className="synthesizeButton" data-testid="synthesizeButton">
+      <button
+        className="synthesizeButton"
+        data-testid="synthesizeButton"
+        disabled
+      >
         合成
       </button>
       <textarea
