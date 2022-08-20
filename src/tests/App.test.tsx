@@ -3,11 +3,11 @@ import { render, screen, act } from "@testing-library/react";
 
 import "@testing-library/jest-dom";
 
-import App from "./App";
+import App from "../App";
 
-import { SplishIpc } from "./SplishIpc";
+import { SplishIpc } from "../SplishIpc";
 
-jest.mock("./SplishIpc.ts");
+jest.mock("../SplishIpc.ts");
 const mockSplishIpc = SplishIpc as jest.Mocked<typeof SplishIpc>;
 
 test("タイトルの表示", () => {
