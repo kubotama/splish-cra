@@ -29,6 +29,7 @@ function App() {
   const onClickSynthesizeButton = async () => {
     const text = inputText;
     setSynthesizedText(text);
+    setInputText("");
   };
 
   return (

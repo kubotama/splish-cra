@@ -102,7 +102,8 @@ describe("入力したテキストから音声に合成する。", () => {
     // Assert
     // 入力エリアの文字列が合成されたテキストのエリアに表示される。
     expect(synthesizedText).toHaveValue(text);
-    // TODO: 入力エリアの文字列がクリアされる。
+    // 入力エリアの文字列がクリアされる。
+    expect(inputText).toHaveValue("");
     // TODO: 合成ボタンが無効になる。
     // TODO: 合成された音声を保存したファイル名が設定されている。
   });
