@@ -62,6 +62,7 @@ function App() {
       <div hidden data-testid="synthesizedFilename">
         {speechFilename}
       </div>
+      <button>再生</button>
     </div>
   );
 }
