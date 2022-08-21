@@ -28,6 +28,9 @@ function App() {
 
   const onClickSynthesizeButton = async () => {
     const text = inputText;
+    SplishIpc.textToSynthesize(text).then((filename) => {
+      setSpeechFilename(filename);
+    });
     setSynthesizedText(text);
     setInputText("");
     setSynthesizeButtonDisabled(true);

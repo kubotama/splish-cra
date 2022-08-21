@@ -84,12 +84,14 @@ describe("入力したテキストから音声に合成する。", () => {
       text: "",
       filename: "",
     });
+    mockSplishIpc.textToSynthesize.mockResolvedValue("speech.mp3");
     render(<App />);
     // const inputText = screen.getByTestId("inputText");
     const inputText =
       screen.getByPlaceholderText("合成するテキストを入力して下さい");
     const synthesizeButton = screen.getByTestId("synthesizeButton");
     const synthesizedText = screen.getByTestId("synthesizedText");
+    const synthesizedFilename = screen.getByTestId("synthesizedFilename");
     const text =
       "Today's Changelog brings improved date filtering and the command palette (beta) to Projects!";
 
@@ -106,6 +108,7 @@ describe("入力したテキストから音声に合成する。", () => {
     expect(inputText).toHaveValue("");
     // 合成ボタンが無効になる。
     expect(synthesizeButton).toBeDisabled();
-    // TODO: 合成された音声を保存したファイル名が設定されている。
+    // 合成された音声を保存したファイル名が設定されている。
+    expect(synthesizedFilename.textContent).toBe("speech.mp3");
   });
 });
