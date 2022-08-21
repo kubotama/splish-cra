@@ -31,6 +31,9 @@ contextBridge.exposeInMainWorld("splish", {
   //   return synthesizedInfo;
   // },
   // await ipcRenderer.invoke(IPCKeys.GET_SYNTHESIZED_INFO),
+  textToSynthesize: async (text: string): Promise<string> => {
+    return await ipcRenderer.invoke("textToSynthesize", text);
+  },
 });
 
 declare global {
