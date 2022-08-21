@@ -30,6 +30,7 @@ function App() {
     const text = inputText;
     setSynthesizedText(text);
     setInputText("");
+    setSynthesizeButtonDisabled(true);
   };
 
   return (

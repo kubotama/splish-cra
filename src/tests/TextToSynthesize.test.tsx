@@ -104,7 +104,8 @@ describe("入力したテキストから音声に合成する。", () => {
     expect(synthesizedText).toHaveValue(text);
     // 入力エリアの文字列がクリアされる。
     expect(inputText).toHaveValue("");
-    // TODO: 合成ボタンが無効になる。
+    // 合成ボタンが無効になる。
+    expect(synthesizeButton).toBeDisabled();
     // TODO: 合成された音声を保存したファイル名が設定されている。
   });
 });
