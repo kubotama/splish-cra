@@ -110,5 +110,8 @@ describe("入力したテキストから音声に合成する。", () => {
     expect(synthesizeButton).toBeDisabled();
     // 合成された音声を保存したファイル名が設定されている。
     expect(synthesizedFilename.textContent).toBe("speech.mp3");
+
+    expect(mockSplishIpc.textToSynthesize).toBeCalledTimes(1);
+    expect(mockSplishIpc.textToSynthesize).toBeCalledWith(text);
   });
 });
