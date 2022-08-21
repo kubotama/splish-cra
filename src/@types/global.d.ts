@@ -3,6 +3,7 @@ export declare global {
     splish: {
       counter: (count: number) => number;
       getSynthesizedInfo: () => Promise<SynthesizedInfo>;
+      textToSynthesize: (text: string) => Promise<string>;
     };
   }
 }

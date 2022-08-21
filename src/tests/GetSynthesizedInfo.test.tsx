@@ -1,11 +1,11 @@
 import { render, screen, act, waitFor } from "@testing-library/react";
-import App from "./App";
+import App from "../App";
 
 import "@testing-library/jest-dom";
 
-import { SplishIpc } from "./SplishIpc";
+import { SplishIpc } from "../SplishIpc";
 
-jest.mock("./SplishIpc.ts");
+jest.mock("../SplishIpc.ts");
 const mockSplishIpc = SplishIpc as jest.Mocked<typeof SplishIpc>;
 
 describe("起動時に、直前に音声に合成したテキストと、音声を保存したファイル名を取得する。", () => {

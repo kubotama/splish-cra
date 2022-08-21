@@ -21,3 +21,15 @@
   margin: 1vh auto;
   border: 0px;
 }
+
+.synthesizeButton {
+  width: 30vw;
+}
+
+.inputText {
+  min-height: 25vh;
+  width: 98vw;
+  font-size: 16pt;
+  padding: 1vh;
+  margin: 1vh auto;
+}

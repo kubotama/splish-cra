@@ -22,4 +22,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-dist
+/dist
+*.mp3
+splish.json
