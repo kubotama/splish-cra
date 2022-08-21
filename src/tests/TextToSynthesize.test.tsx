@@ -78,8 +78,30 @@ describe("入力したテキストから音声に合成する。", () => {
     expect(synthesizeButton).toBeEnabled();
   });
 
-  test("テキストの入力エリアに文字列が入力されているときに合成ボタンをクリックする", () => {
-    // TODO: 入力エリアの文字列が合成されたテキストのエリアに表示される。
+  test("テキストの入力エリアに文字列が入力されているときに合成ボタンをクリックする", async () => {
+    // Arrange
+    mockSplishIpc.getSynthesizedInfo.mockResolvedValue({
+      text: "",
+      filename: "",
+    });
+    render(<App />);
+    // const inputText = screen.getByTestId("inputText");
+    const inputText =
+      screen.getByPlaceholderText("合成するテキストを入力して下さい");
+    const synthesizeButton = screen.getByTestId("synthesizeButton");
+    const synthesizedText = screen.getByTestId("synthesizedText");
+    const text =
+      "Today's Changelog brings improved date filtering and the command palette (beta) to Projects!";
+
+    // Act
+    // テキストの入力エリアに文字列を入力する
+    await userEvent.type(inputText, text);
+    // 合成ボタンをクリックする
+    await userEvent.click(synthesizeButton);
+
+    // Assert
+    // 入力エリアの文字列が合成されたテキストのエリアに表示される。
+    expect(synthesizedText).toHaveValue(text);
     // TODO: 入力エリアの文字列がクリアされる。
     // TODO: 合成ボタンが無効になる。
     // TODO: 合成された音声を保存したファイル名が設定されている。

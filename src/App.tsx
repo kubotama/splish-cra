@@ -26,6 +26,11 @@ function App() {
     setSynthesizeButtonDisabled(text.length === 0 ? true : false);
   };
 
+  const onClickSynthesizeButton = async () => {
+    const text = inputText;
+    setSynthesizedText(text);
+  };
+
   return (
     <div className="App">
       <header className="App-header">SPLISH</header>
@@ -39,6 +44,7 @@ function App() {
       <button
         className="synthesizeButton"
         data-testid="synthesizeButton"
+        onClick={onClickSynthesizeButton}
         disabled={synthesizeButtonDisabled}
       >
         合成
