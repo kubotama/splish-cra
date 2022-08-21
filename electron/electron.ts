@@ -32,6 +32,10 @@ const createWindow = () => {
   ipcMain.handle(
     "getSynthesizedInfo",
     async (_event: Electron.IpcMainInvokeEvent) => {
+      const filename = "splish.json";
+      if (fs.existsSync(filename) === false) {
+        fs.writeFileSync(filename, JSON.stringify({ text: "", filename: "" }));
+      }
       const synthesizedInfo = fs.readFileSync("splish.json", {
         encoding: "utf8",
       });
