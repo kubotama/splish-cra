@@ -10,11 +10,12 @@ function App() {
   const [inputText, setInputText] = useState("");
   const [synthesizeButtonDisabled, setSynthesizeButtonDisabled] =
     useState(true);
+  const [playbuttonDisabled, setPlaybuttonDisabled] = useState(true);
 
   useEffect(() => {
     SplishIpc.getSynthesizedInfo().then((synthesizedInfo) => {
       setSynthesizedText(synthesizedInfo.text);
-      setSpeechFilename(synthesizedInfo.filename);
+      setSFandPBD(synthesizedInfo.filename);
     });
   }, []);
 
@@ -29,11 +30,16 @@ function App() {
   const onClickSynthesizeButton = async () => {
     const text = inputText;
     SplishIpc.textToSynthesize(text).then((filename) => {
-      setSpeechFilename(filename);
+      setSFandPBD(filename);
     });
     setSynthesizedText(text);
     setInputText("");
     setSynthesizeButtonDisabled(true);
+  };
+
+  const setSFandPBD = (filename: string) => {
+    setSpeechFilename(filename);
+    setPlaybuttonDisabled(filename.length === 0 ? true : false);
   };
 
   return (
@@ -62,7 +68,7 @@ function App() {
       <div hidden data-testid="synthesizedFilename">
         {speechFilename}
       </div>
-      <button disabled>再生</button>
+      <button disabled={playbuttonDisabled}>再生</button>
     </div>
   );
 }
