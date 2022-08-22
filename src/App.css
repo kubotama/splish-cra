@@ -18,11 +18,12 @@
   width: 98vw;
   font-size: 16pt;
   padding: 1vh;
-  margin: 1vh auto;
+  margin: 5vh auto;
   border: 0px;
 }
 
 .synthesizeButton {
+  font-size: 24pt;
   width: 30vw;
 }
 
@@ -32,4 +33,9 @@
   font-size: 16pt;
   padding: 1vh;
   margin: 1vh auto;
+}
+
+.playButton {
+  width: 30vw;
+  font-size: 24pt;
 }

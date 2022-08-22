@@ -83,7 +83,11 @@ function App() {
       <div hidden data-testid="synthesizedFilename">
         {speechFilename}
       </div>
-      <button disabled={playButtonDisabled} onClick={onClickPlayButton}>
+      <button
+        className="playButton"
+        disabled={playButtonDisabled}
+        onClick={onClickPlayButton}
+      >
         再生
       </button>
     </div>
