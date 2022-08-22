@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import App from "../App";
 
+import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 
 import { SplishIpc } from "../SplishIpc";
@@ -61,6 +62,21 @@ describe("合成した音声を再生する。", () => {
     expect(playButton).toBeEnabled();
   });
 
-  test("再生ボタンをクリックすると、再生ボタンが無効になる。", () => {});
+  test("再生ボタンをクリックすると、再生ボタンが無効になる。", async () => {
+    // Arrange
+    mockSplishIpc.getSynthesizedInfo.mockResolvedValue({
+      text: "",
+      filename: "speech.mp3",
+    });
+    render(<App />);
+    const playButton = screen.getByRole("button", { name: "再生" });
+
+    // Act
+    await userEvent.click(playButton);
+
+    // Assert
+    // splish.jsonのfilenameが設定されている場合には再生ボタンが有効になる。
+    expect(playButton).toBeDisabled();
+  });
   test("再生が終了したら、再生ボタンを有効にする。", () => {});
 });
