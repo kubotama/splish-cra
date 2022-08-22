@@ -44,6 +44,17 @@ function App() {
 
   const onClickPlayButton = async () => {
     setPlayButtonDisabled(true);
+    window.splish.playAudio(speechFilename).then(async (buffer) => {
+      const ctx = new AudioContext();
+      const source = ctx.createBufferSource();
+      source.buffer = await ctx.decodeAudioData(buffer.buffer);
+      source.connect(ctx.destination);
+      source.start();
+      source.onended = (_event) => {
+        source.onended = null;
+        setPlayButtonDisabled(false);
+      };
+    });
   };
 
   return (

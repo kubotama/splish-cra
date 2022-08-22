@@ -1,3 +1,5 @@
+import * as fs from "fs";
+
 import { render, screen } from "@testing-library/react";
 import App from "../App";
 
@@ -62,12 +64,14 @@ describe("合成した音声を再生する。", () => {
     expect(playButton).toBeEnabled();
   });
 
-  test("再生ボタンをクリックすると、再生ボタンが無効になる。", async () => {
+  test.skip("再生ボタンをクリックすると、再生ボタンが無効になる。", async () => {
     // Arrange
     mockSplishIpc.getSynthesizedInfo.mockResolvedValue({
       text: "",
       filename: "speech.mp3",
     });
+    const buffer = fs.readFileSync("speech.mp3");
+    mockSplishIpc.playAudio.mockResolvedValue(buffer);
     render(<App />);
     const playButton = screen.getByRole("button", { name: "再生" });
 
@@ -78,5 +82,5 @@ describe("合成した音声を再生する。", () => {
     // splish.jsonのfilenameが設定されている場合には再生ボタンが有効になる。
     expect(playButton).toBeDisabled();
   });
-  test("再生が終了したら、再生ボタンを有効にする。", () => {});
+  test.skip("再生が終了したら、再生ボタンを有効にする。", () => {});
 });

@@ -74,6 +74,14 @@ const createWindow = () => {
       return filename;
     }
   );
+
+  ipcMain.handle(
+    "playAudio",
+    async (_event: Electron.IpcMainInvokeEvent, filename: string) => {
+      const buffer = fs.readFileSync(filename);
+      return buffer;
+    }
+  );
 };
 
 app.on("window-all-closed", () => {
