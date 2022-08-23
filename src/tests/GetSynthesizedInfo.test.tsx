@@ -10,12 +10,12 @@ const mockSplishIpc = SplishIpc as jest.Mocked<typeof SplishIpc>;
 
 describe("起動時に、直前に音声に合成したテキストと、音声を保存したファイル名を取得する。", () => {
   beforeEach(() => {
-    mockSplishIpc.getSynthesizedInfo.mockClear();
+    mockSplishIpc.loadConfiguration.mockClear();
   });
 
   test("テキストとファイル名の領域が存在する。", () => {
     // Arrange
-    mockSplishIpc.getSynthesizedInfo.mockResolvedValue({
+    mockSplishIpc.loadConfiguration.mockResolvedValue({
       text: "",
       filename: "",
     });
@@ -38,7 +38,7 @@ describe("起動時に、直前に音声に合成したテキストと、音声�
 
   test("splish.jsonがない場合には、テキストとファイル名とも''にを設定する。", () => {
     // Arrange
-    mockSplishIpc.getSynthesizedInfo.mockResolvedValue({
+    mockSplishIpc.loadConfiguration.mockResolvedValue({
       text: "",
       filename: "",
     });
@@ -61,7 +61,7 @@ describe("起動時に、直前に音声に合成したテキストと、音声�
 
   test("splish.jsonがある場合には、splish.jsonのテキストとファイル名を設定する。", async () => {
     // Arrange
-    mockSplishIpc.getSynthesizedInfo.mockResolvedValue({
+    mockSplishIpc.loadConfiguration.mockResolvedValue({
       text: "Before we can enable the visualizations, we need to install the Lighthouse plugin. Skip this step if you're already using it! Otherwise, navigate to Plugins and search for Lighthouse. Click Install.",
       filename: "speech.mp3",
     });

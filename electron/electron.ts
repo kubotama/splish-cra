@@ -30,7 +30,7 @@ const createWindow = () => {
   // }
 
   ipcMain.handle(
-    "getSynthesizedInfo",
+    "loadConfiguration",
     async (_event: Electron.IpcMainInvokeEvent) => {
       const filename = "splish.json";
       if (fs.existsSync(filename) === false) {

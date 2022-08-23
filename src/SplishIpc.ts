@@ -1,8 +1,8 @@
 import { SynthesizedInfo } from "../electron/electron";
 
 export const SplishIpc = {
-  getSynthesizedInfo: async (): Promise<SynthesizedInfo> => {
-    return window.splish.getSynthesizedInfo();
+  loadConfiguration: async (): Promise<SynthesizedInfo> => {
+    return window.splish.loadConfiguration();
   },
   textToSynthesize: async (text: string): Promise<string> => {
     return window.splish.textToSynthesize(text);

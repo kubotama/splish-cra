@@ -13,7 +13,7 @@ function App() {
   const [playButtonDisabled, setPlayButtonDisabled] = useState(true);
 
   useEffect(() => {
-    SplishIpc.getSynthesizedInfo().then((synthesizedInfo) => {
+    SplishIpc.loadConfiguration().then((synthesizedInfo) => {
       setSynthesizedText(synthesizedInfo.text);
       setSFandPBD(synthesizedInfo.filename);
     });
