@@ -13,7 +13,7 @@ function App() {
   const [playButtonDisabled, setPlayButtonDisabled] = useState(true);
 
   useEffect(() => {
-    SplishIpc.getSynthesizedInfo().then((synthesizedInfo) => {
+    SplishIpc.loadConfiguration().then((synthesizedInfo) => {
       setSynthesizedText(synthesizedInfo.text);
       setSFandPBD(synthesizedInfo.filename);
     });
@@ -42,18 +42,22 @@ function App() {
     setPlayButtonDisabled(filename.length === 0 ? true : false);
   };
 
+  const playAudio = async (buffer: Buffer) => {
+    const ctx = new AudioContext();
+    const source = ctx.createBufferSource();
+    source.buffer = await ctx.decodeAudioData(buffer.buffer);
+    source.connect(ctx.destination);
+    source.start();
+    source.onended = (_event) => {
+      source.onended = null;
+      setPlayButtonDisabled(false);
+    };
+  };
+
   const onClickPlayButton = async () => {
     setPlayButtonDisabled(true);
-    window.splish.playAudio(speechFilename).then(async (buffer) => {
-      const ctx = new AudioContext();
-      const source = ctx.createBufferSource();
-      source.buffer = await ctx.decodeAudioData(buffer.buffer);
-      source.connect(ctx.destination);
-      source.start();
-      source.onended = (_event) => {
-        source.onended = null;
-        setPlayButtonDisabled(false);
-      };
+    window.splish.readAudioFile(speechFilename).then(async (buffer) => {
+      playAudio(buffer);
     });
   };
 

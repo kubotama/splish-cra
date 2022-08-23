@@ -12,7 +12,7 @@ const mockSplishIpc = SplishIpc as jest.Mocked<typeof SplishIpc>;
 describe("入力したテキストから音声に合成する。", () => {
   test("テキストの入力エリアと合成ボタンが表示されている。", () => {
     // Arrange
-    mockSplishIpc.getSynthesizedInfo.mockResolvedValue({
+    mockSplishIpc.loadConfiguration.mockResolvedValue({
       text: "",
       filename: "",
     });
@@ -35,7 +35,7 @@ describe("入力したテキストから音声に合成する。", () => {
 
   test("テキストの入力エリアに文字列が入力されていないときは合成ボタンが無効である。", () => {
     // Arrange
-    mockSplishIpc.getSynthesizedInfo.mockResolvedValue({
+    mockSplishIpc.loadConfiguration.mockResolvedValue({
       text: "",
       filename: "",
     });
@@ -56,7 +56,7 @@ describe("入力したテキストから音声に合成する。", () => {
 
   test("テキストの入力エリアに文字列が入力されているときは合成ボタンが有効である。", async () => {
     // Arrange
-    mockSplishIpc.getSynthesizedInfo.mockResolvedValue({
+    mockSplishIpc.loadConfiguration.mockResolvedValue({
       text: "",
       filename: "",
     });
@@ -80,7 +80,7 @@ describe("入力したテキストから音声に合成する。", () => {
 
   test("テキストの入力エリアに文字列が入力されているときに合成ボタンをクリックする", async () => {
     // Arrange
-    mockSplishIpc.getSynthesizedInfo.mockResolvedValue({
+    mockSplishIpc.loadConfiguration.mockResolvedValue({
       text: "",
       filename: "",
     });

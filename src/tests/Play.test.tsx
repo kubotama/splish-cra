@@ -13,12 +13,12 @@ const mockSplishIpc = SplishIpc as jest.Mocked<typeof SplishIpc>;
 
 describe("合成した音声を再生する。", () => {
   beforeEach(() => {
-    mockSplishIpc.getSynthesizedInfo.mockClear();
+    mockSplishIpc.loadConfiguration.mockClear();
   });
 
   test("再生ボタンが表示されている。", () => {
     // Arrange
-    mockSplishIpc.getSynthesizedInfo.mockResolvedValue({
+    mockSplishIpc.loadConfiguration.mockResolvedValue({
       text: "",
       filename: "",
     });
@@ -34,7 +34,7 @@ describe("合成した音声を再生する。", () => {
 
   test("splish.jsonのfilenameが設定されていない場合には無効になる。", () => {
     // Arrange
-    mockSplishIpc.getSynthesizedInfo.mockResolvedValue({
+    mockSplishIpc.loadConfiguration.mockResolvedValue({
       text: "",
       filename: "",
     });
@@ -50,7 +50,7 @@ describe("合成した音声を再生する。", () => {
 
   test.skip("splish.jsonのfilenameが設定されている場合には再生ボタンが有効になる。", () => {
     // Arrange
-    mockSplishIpc.getSynthesizedInfo.mockResolvedValue({
+    mockSplishIpc.loadConfiguration.mockResolvedValue({
       text: "",
       filename: "speech.mp3",
     });
@@ -66,12 +66,12 @@ describe("合成した音声を再生する。", () => {
 
   test.skip("再生ボタンをクリックすると、再生ボタンが無効になる。", async () => {
     // Arrange
-    mockSplishIpc.getSynthesizedInfo.mockResolvedValue({
+    mockSplishIpc.loadConfiguration.mockResolvedValue({
       text: "",
       filename: "speech.mp3",
     });
     const buffer = fs.readFileSync("speech.mp3");
-    mockSplishIpc.playAudio.mockResolvedValue(buffer);
+    mockSplishIpc.readAudioFile.mockResolvedValue(buffer);
     render(<App />);
     const playButton = screen.getByRole("button", { name: "再生" });
 
