@@ -30,7 +30,7 @@ const createWindow = () => {
   // }
 
   ipcMain.handle(
-    "getSynthesizedInfo",
+    "loadConfiguration",
     async (_event: Electron.IpcMainInvokeEvent) => {
       const filename = "splish.json";
       if (fs.existsSync(filename) === false) {
@@ -76,7 +76,7 @@ const createWindow = () => {
   );
 
   ipcMain.handle(
-    "playAudio",
+    "readAudioFile",
     async (_event: Electron.IpcMainInvokeEvent, filename: string) => {
       const buffer = fs.readFileSync(filename);
       return buffer;

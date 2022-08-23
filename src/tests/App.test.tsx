@@ -11,7 +11,7 @@ jest.mock("../SplishIpc.ts");
 const mockSplishIpc = SplishIpc as jest.Mocked<typeof SplishIpc>;
 
 test("タイトルの表示", () => {
-  mockSplishIpc.getSynthesizedInfo.mockResolvedValue({
+  mockSplishIpc.loadConfiguration.mockResolvedValue({
     text: "",
     filename: "",
   });
