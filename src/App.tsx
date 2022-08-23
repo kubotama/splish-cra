@@ -44,7 +44,7 @@ function App() {
 
   const onClickPlayButton = async () => {
     setPlayButtonDisabled(true);
-    window.splish.playAudio(speechFilename).then(async (buffer) => {
+    window.splish.readAudioFile(speechFilename).then(async (buffer) => {
       const ctx = new AudioContext();
       const source = ctx.createBufferSource();
       source.buffer = await ctx.decodeAudioData(buffer.buffer);

@@ -12,8 +12,8 @@ contextBridge.exposeInMainWorld("splish", {
     await ipcRenderer.invoke("loadConfiguration"),
   textToSynthesize: async (text: string): Promise<string> =>
     await ipcRenderer.invoke("textToSynthesize", text),
-  playAudio: async (filename: string): Promise<Buffer> =>
-    await ipcRenderer.invoke("playAudio", filename),
+  readAudioFile: async (filename: string): Promise<Buffer> =>
+    await ipcRenderer.invoke("readAudioFile", filename),
 });
 
 declare global {

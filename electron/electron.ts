@@ -76,7 +76,7 @@ const createWindow = () => {
   );
 
   ipcMain.handle(
-    "playAudio",
+    "readAudioFile",
     async (_event: Electron.IpcMainInvokeEvent, filename: string) => {
       const buffer = fs.readFileSync(filename);
       return buffer;

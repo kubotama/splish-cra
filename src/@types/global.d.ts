@@ -4,7 +4,7 @@ export declare global {
       counter: (count: number) => number;
       loadConfiguration: () => Promise<SynthesizedInfo>;
       textToSynthesize: (text: string) => Promise<string>;
-      playAudio: (filename: string) => Promise<Buffer>;
+      readAudioFile: (filename: string) => Promise<Buffer>;
     };
   }
 }

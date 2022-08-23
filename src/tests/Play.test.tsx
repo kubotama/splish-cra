@@ -71,7 +71,7 @@ describe("合成した音声を再生する。", () => {
       filename: "speech.mp3",
     });
     const buffer = fs.readFileSync("speech.mp3");
-    mockSplishIpc.playAudio.mockResolvedValue(buffer);
+    mockSplishIpc.readAudioFile.mockResolvedValue(buffer);
     render(<App />);
     const playButton = screen.getByRole("button", { name: "再生" });
 
