@@ -69,6 +69,7 @@ function App() {
         className="inputText"
         placeholder="合成するテキストを入力して下さい"
         data-testid="inputText"
+        spellCheck="false"
         value={inputText}
         onChange={onChangeInputText}
       />
@@ -84,6 +85,7 @@ function App() {
         className="synthesizedText"
         data-testid="synthesizedText"
         defaultValue={synthesizedText}
+        spellCheck="false"
       ></textarea>
       <div hidden data-testid="synthesizedFilename">
         {speechFilename}
