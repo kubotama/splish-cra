@@ -20,6 +20,7 @@
   padding: 1vh;
   margin: 5vh auto;
   border: 0px;
+  outline: none;
 }
 
 .synthesizeButton {
@@ -38,4 +39,14 @@
 .playButton {
   width: 30vw;
   font-size: 24pt;
+}
+
+.invisibleText {
+  color: black;
+  background-color: black;
+}
+
+.visible {
+  color: black;
+  background-color: white;
 }
