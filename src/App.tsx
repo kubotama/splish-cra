@@ -5,12 +5,20 @@ import { SplishIpc } from "./SplishIpc";
 import "./App.css";
 
 function App() {
+  const classSynthesizedTextVisible = {
+    visible: "synthesizedText visibleText",
+    invisible: "synthesizedText invisibleText",
+  };
+
   const [synthesizedText, setSynthesizedText] = useState("");
   const [speechFilename, setSpeechFilename] = useState("");
   const [inputText, setInputText] = useState("");
   const [synthesizeButtonDisabled, setSynthesizeButtonDisabled] =
     useState(true);
   const [playButtonDisabled, setPlayButtonDisabled] = useState(true);
+  const [synthesizedTextClass, setSynthesizedTextClass] = useState(
+    classSynthesizedTextVisible.visible
+  );
 
   useEffect(() => {
     SplishIpc.loadConfiguration().then((synthesizedInfo) => {
@@ -62,6 +70,14 @@ function App() {
     });
   };
 
+  const onClickSynthesizedText = () => {
+    setSynthesizedTextClass(
+      synthesizedTextClass === classSynthesizedTextVisible.visible
+        ? classSynthesizedTextVisible.invisible
+        : classSynthesizedTextVisible.visible
+    );
+  };
+
   return (
     <div className="App">
       <header className="App-header">SPLISH</header>
@@ -69,6 +85,7 @@ function App() {
         className="inputText"
         placeholder="合成するテキストを入力して下さい"
         data-testid="inputText"
+        spellCheck="false"
         value={inputText}
         onChange={onChangeInputText}
       />
@@ -81,9 +98,11 @@ function App() {
         合成
       </button>
       <textarea
-        className="synthesizedText"
+        className={synthesizedTextClass}
         data-testid="synthesizedText"
         defaultValue={synthesizedText}
+        spellCheck="false"
+        onClick={onClickSynthesizedText}
       ></textarea>
       <div hidden data-testid="synthesizedFilename">
         {speechFilename}
