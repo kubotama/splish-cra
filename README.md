@@ -1,46 +1,50 @@
-# Getting Started with Create React App
+<style>
+  .title {
+    text-align: center;
+    font-size: 200%;
+  }
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+  .subtitle {
+    margin: 5px auto 30px;
+    text-align: center;
+    font-size: 150%;
+  }
+</style>
 
-## Available Scripts
+<div class="title">SPLISH</div>
 
-In the project directory, you can run:
+<div class="subtitle">SPLISHは、speakingとlistening, shadowingの先頭の2文字づつを組み合わせた造語です。</div>
 
-### `npm start`
+## 目的
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+英語の上達、とくにスピーキングやリスニングにはシャドーイングという学習方法が有効だと聞いたことがあります。
+splish はシャドーイングやパラレル・リーディングなどの学習方法をサポートするためのアプリケーションです。
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+wikipedia の[シャドーイングの項目](https://ja.wikipedia.org/wiki/%E3%82%B7%E3%83%A3%E3%83%89%E3%83%BC%E3%82%A4%E3%83%B3%E3%82%B0)によれば、学習する人のレベルにあわせた教材として、シャドーイングには音声、パラレル・リーディングには音声とテキストが必要です。現実には、自分の興味のある分野で、レベルにあった教材を入手することは、なかなか簡単ではありません。一方で英語のテキストは、インターネットに無数にあります。自分の興味のあるテキストから音声を合成できれば、教材を用意できることになります。
 
-### `npm test`
+そこで、Google の [Text-to-Speech: 自然な音声合成](https://cloud.google.com/text-to-speech)を利用して音声を合成することを考えました。Google の Text-to-Speech は、1 ヶ月に 100 万文字、あるいは 400 万文字までの無料枠があります。個人の学習目的であれば、かなりの文字数だと思います。また無料枠を越しても、標準音声であれば 100 万文字ごとに$4 です。詳しくは[料金表](https://cloud.google.com/text-to-speech/pricing)を確認して下さい。
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+なお Text-to-Speech の英語の発音がどの程度まで正確なのかは私には判断できません。[デモ](https://cloud.google.com/text-to-speech#section-2)で日本語の発音を確認したところ、違和感がないわけではありませんが、目をつぶることにしました。
 
-### `npm run build`
+## 機能
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+splish には、以下の機能があります。
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- 入力したテキストから音声を合成します。合成した音声はローカル環境に mp3 形式のファイルとして保存します。
+- 合成した音声を再生します。再生するときにテキストの表示、非表示を切り替えられます。テキストを表示した場合にはパラレル・リーディング、テキストを表示しない場合にはシャドーイングを想定しています。
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 開発環境
 
-### `npm run eject`
+Electron ベースで開発しています。開発及び検証している環境は、Linux(Ubuntu 20.04)です。
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## 使い方
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 準備
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+#### Google API を利用するための準備
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+#### ビルドの手順
 
-## Learn More
+### 起動方法
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 操作方法
