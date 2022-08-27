@@ -22,7 +22,7 @@ splish には、以下の機能があります。
 
 ## 開発環境
 
-Electron ベースで開発しています。開発及び検証している環境は、Linux(Ubuntu 20.04)です。
+Electron ベースで開発しています。開発及び検証している環境は、Linux(Ubuntu 20.04)です。開発にあたっては[Create React App(typescript)をベースに electron 環境を構築する](https://zenn.dev/niwaringo/articles/af693596ef948e)を参考にしました。
 
 ## 使い方
 
