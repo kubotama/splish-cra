@@ -1,13 +1,28 @@
 <style>
   .title {
     text-align: center;
-    font-size: 200%;
+    font-size: 300%;
   }
 
   .subtitle {
     margin: 5px auto 30px;
     text-align: center;
+    font-size: 250%;
+  }
+
+  .header1 {
+    font-size: 200%;
+    margin 25px auto;
+  }
+
+  .header2 {
     font-size: 150%;
+    margin 20px auto;
+  }
+
+  .header3 {
+    font-size: 125%;
+    margin 15px auto;
   }
 </style>
 
@@ -15,7 +30,7 @@
 
 <div class="subtitle">SPLISHは、speakingとlistening, shadowingの先頭の2文字づつを組み合わせた造語です。</div>
 
-## 目的
+<div class="header1">目的</div>
 
 英語の上達、とくにスピーキングやリスニングにはシャドーイングという学習方法が有効だと聞いたことがあります。
 splish はシャドーイングやパラレル・リーディングなどの学習方法をサポートするためのアプリケーションです。
@@ -26,25 +41,44 @@ wikipedia の[シャドーイングの項目](https://ja.wikipedia.org/wiki/%E3%
 
 なお Text-to-Speech の英語の発音がどの程度まで正確なのかは私には判断できません。[デモ](https://cloud.google.com/text-to-speech#section-2)で日本語の発音を確認したところ、違和感がないわけではありませんが、目をつぶることにしました。
 
-## 機能
+<div class="header1">機能</div>
 
 splish には、以下の機能があります。
 
 - 入力したテキストから音声を合成します。合成した音声はローカル環境に mp3 形式のファイルとして保存します。
 - 合成した音声を再生します。再生するときにテキストの表示、非表示を切り替えられます。テキストを表示した場合にはパラレル・リーディング、テキストを表示しない場合にはシャドーイングを想定しています。
 
-## 開発環境
+<div class="header1">開発環境</div>
 
 Electron ベースで開発しています。開発及び検証している環境は、Linux(Ubuntu 20.04)です。
 
-## 使い方
+<div class="header1">使い方</div>
 
-### 準備
+splish を利用するためには、
 
-#### Google API を利用するための準備
+- Google API を利用するための設定
+- アプリケーションのビルド
 
-#### ビルドの手順
+が必要です。
 
-### 起動方法
+<div class="header2">Google API を利用するための準備</div>
 
-### 操作方法
+<div class="header3">1. プロジェクトを作成します</div>
+
+[Google Cloud のコンソール](https://console.cloud.google.com/)でプロジェクトを作成します。
+
+<div class="header3">2. Text-to-Speech の API を有効にします</div>
+
+作成したプロジェクトで Text-to-Speech の API を有効にします。
+
+<div class="header3">3. サービスアカウントとして認証します</div>
+
+[サービス アカウントとして認証する  |  Google Cloud](https://cloud.google.com/docs/authentication/production?hl=ja#create_service_account)に書かれている手順に従って、サービスアカウントとサービスアカウントキーを作成します。
+
+<div class="header3">4. 環境変数を設定します</div>
+
+サービスアカウントキーをダウンロードしたファイルを環境変数(GOOGLE_APPLICATION_CREDENTIALS)に設定します。
+
+<div class="header2">ビルドの手順</div>
+
+<div class="header2">操作方法</div>
