@@ -1,46 +1,98 @@
-# Getting Started with Create React App
+# SPLISH
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+SPLISH は、speaking と listening, shadowing の先頭の 2 文字づつを組み合わせた造語です。
 
-## Available Scripts
+## 目的
 
-In the project directory, you can run:
+英語の上達、とくにスピーキングやリスニングにはシャドーイングという学習方法が有効だと聞いたことがあります。
+splish はシャドーイングやパラレル・リーディングなどの学習方法をサポートするためのアプリケーションです。
 
-### `npm start`
+wikipedia の[シャドーイングの項目](https://ja.wikipedia.org/wiki/%E3%82%B7%E3%83%A3%E3%83%89%E3%83%BC%E3%82%A4%E3%83%B3%E3%82%B0)によれば、学習する人のレベルにあわせた教材として、シャドーイングには音声、パラレル・リーディングには音声とテキストが必要です。現実には、自分の興味のある分野で、レベルにあった教材を入手することは、なかなか簡単ではありません。一方で英語のテキストは、インターネットに無数にあります。自分の興味のあるテキストから音声を合成できれば、教材を用意できることになります。
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+そこで、Google の [Text-to-Speech: 自然な音声合成](https://cloud.google.com/text-to-speech)を利用して音声を合成することを考えました。Google の Text-to-Speech は、1 ヶ月に 100 万文字、あるいは 400 万文字までの無料枠があります。個人の学習目的であれば、かなりの文字数だと思います。また無料枠を越しても、標準音声であれば 100 万文字ごとに$4 です。詳しくは[料金表](https://cloud.google.com/text-to-speech/pricing)を確認して下さい。
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+なお Text-to-Speech の英語の発音がどの程度まで正確なのかは私には判断できません。[デモ](https://cloud.google.com/text-to-speech#section-2)で日本語の発音を確認したところ、違和感がないわけではありませんが、目をつぶることにしました。
 
-### `npm test`
+## 機能
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+splish には、以下の機能があります。
 
-### `npm run build`
+- 入力したテキストから音声を合成します。合成した音声はローカル環境に mp3 形式のファイルとして保存します。
+- 合成した音声を再生します。再生するときにテキストの表示、非表示を切り替えられます。テキストを表示した場合にはパラレル・リーディング、テキストを表示しない場合にはシャドーイングを想定しています。
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 開発環境
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Electron ベースで開発しています。開発及び検証している環境は、Linux(Ubuntu 20.04)です。開発にあたっては[Create React App(typescript)をベースに electron 環境を構築する](https://zenn.dev/niwaringo/articles/af693596ef948e)を参考にしました。
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 使い方
 
-### `npm run eject`
+splish を利用するためには、
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- Google API を利用するための設定
+- アプリケーションのビルド
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+が必要です。以下の説明は linux 環境を前提としています。
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Google API を利用するための準備
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+#### 1. プロジェクトを作成します
 
-## Learn More
+[Google Cloud のコンソール](https://console.cloud.google.com/)でプロジェクトを作成します。
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### 2. Text-to-Speech の API を有効にします
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+作成したプロジェクトで Text-to-Speech の API を有効にします。
+
+#### 3. サービスアカウントとして認証します
+
+[サービス アカウントとして認証する  |  Google Cloud](https://cloud.google.com/docs/authentication/production?hl=ja#create_service_account)に書かれている手順に従って、サービスアカウントとサービスアカウントキーを作成します。
+
+#### 4. 環境変数を設定します
+
+サービスアカウントキーをダウンロードしたファイルを環境変数(GOOGLE_APPLICATION_CREDENTIALS)に設定します。
+
+### ビルドの手順
+
+リポジトリをクローンしてビルドします
+
+```sh
+> git clone git@github.com:kubotama/splish-cra.git
+> cd splish-cra
+> yarn electron:build:portable
+```
+
+dist/linux-unpacked/splish-cra がビルドされます。
+
+### 操作方法
+
+#### 1. splish を起動します
+
+```sh
+> dist/linux-unpacked/splish-cra
+```
+
+splish の画面が表示されます。
+
+![画面イメージ](./splish.png)
+
+#### 2. テキストの入力領域に音声を合成したいテキストを入力します
+
+テキストの入力領域にテキストが入力されると、合成ボタンが有効になります。サンプルの英文には GitHub の[About ページ](https://github.com/about)の先頭に書かれているテキストを利用しています。
+
+![合成ボタンが有効](./splish1.png)
+
+#### 3. 合成ボタンをクリックして音声を合成します
+
+合成ボタンをクリックすると音声を合成します。テキストの入力領域がクリアされて、代わりに音声を合成したテキストを表示する領域に表示されます。音声が合成されると再生ボタンが有効になります。
+
+![再生ボタンが有効](./splish2.png)
+
+#### 4. 合成した音声を再生する
+
+再生ボタンをクリックすると合成した音声を再生します。
+
+#### 5. テキストを読めなくする
+
+音声を合成したテキストを表示する領域をクリックすると、背景色が文字の色と同じになって、テキストが読めなくなります。もう一度クリックすると戻ります。
+
+![テキストが非表示](./splish3.png)
