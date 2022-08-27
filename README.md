@@ -53,4 +53,14 @@ splish を利用するためには、
 
 ### ビルドの手順
 
+リポジトリをクローンしてビルドします
+
+```sh
+> git clone git@github.com:kubotama/splish-cra.git
+> cd splish-cra
+> yarn electron:build:portable
+```
+
+dist/linux-unpacked/splish-cra がビルドされます。
+
 ### 操作方法
