@@ -4,7 +4,7 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 10vh;
+  min-height: 5vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,7 +14,7 @@
 }
 
 .synthesizedText {
-  min-height: 25vh;
+  min-height: 20vh;
   width: 98vw;
   font-size: 16pt;
   padding: 1vh;
@@ -29,9 +29,9 @@
 }
 
 .inputText {
-  min-height: 25vh;
+  min-height: 10vh;
   width: 98vw;
-  font-size: 16pt;
+  font-size: 12pt;
   padding: 1vh;
   margin: 1vh auto;
 }
@@ -49,4 +49,8 @@
 .visible {
   color: black;
   background-color: white;
+}
+
+body {
+  overflow: hidden;
 }
