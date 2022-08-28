@@ -5,9 +5,6 @@ import { SynthesizedInfo } from "./electron";
 import { IpcRenderer, ipcRenderer, contextBridge } from "electron";
 
 contextBridge.exposeInMainWorld("splish", {
-  counter: (count: number) => {
-    return count + 1;
-  },
   loadConfiguration: async (): Promise<SynthesizedInfo> =>
     await ipcRenderer.invoke("loadConfiguration"),
   textToSynthesize: async (text: string): Promise<string> =>
