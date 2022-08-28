@@ -1,6 +1,5 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 import * as path from "path";
-import * as url from "url";
 import * as fs from "fs";
 
 import { TextToSpeechClient } from "@google-cloud/text-to-speech";
@@ -16,11 +15,7 @@ const createWindow = () => {
   });
 
   const appURL = app.isPackaged
-    ? url.format({
-        pathname: path.join(__dirname, "../index.html"),
-        protocol: "file:",
-        slashes: true,
-      })
+    ? "file://" + path.join(__dirname, "../index.html")
     : "http://localhost:3000";
 
   win.loadURL(appURL);
