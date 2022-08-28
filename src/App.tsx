@@ -36,7 +36,7 @@ function App() {
   };
 
   const onClickSynthesizeButton = async () => {
-    const text = inputText;
+    const text = inputText.replace(/’/g, "'");
     setPlayButtonDisabled(true);
     SplishIpc.textToSynthesize(text).then((filename) => {
       setSFandPBD(filename);
