@@ -4,10 +4,10 @@ import { SplishIpc } from "./SplishIpc";
 
 import "./App.css";
 
-function App() {
-  const classSynthesizedTextVisible = {
-    visible: "synthesizedText visibleText",
-    invisible: "synthesizedText invisibleText",
+const App = () => {
+  const classTextVisible = {
+    visible: "visibleText",
+    invisible: "invisibleText",
   };
 
   const [synthesizedText, setSynthesizedText] = useState("");
@@ -17,7 +17,7 @@ function App() {
     useState(true);
   const [playButtonDisabled, setPlayButtonDisabled] = useState(true);
   const [synthesizedTextClass, setSynthesizedTextClass] = useState(
-    classSynthesizedTextVisible.visible
+    "synthesizedText " + classTextVisible.visible
   );
 
   useEffect(() => {
@@ -72,9 +72,9 @@ function App() {
 
   const onClickSynthesizedText = () => {
     setSynthesizedTextClass(
-      synthesizedTextClass === classSynthesizedTextVisible.visible
-        ? classSynthesizedTextVisible.invisible
-        : classSynthesizedTextVisible.visible
+      synthesizedTextClass === "synthesizedText " + classTextVisible.visible
+        ? "synthesizedText " + classTextVisible.invisible
+        : "synthesizedText " + classTextVisible.visible
     );
   };
 
@@ -116,6 +116,6 @@ function App() {
       </button>
     </div>
   );
-}
+};
 
 export default App;
