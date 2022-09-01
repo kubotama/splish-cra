@@ -5,9 +5,9 @@ import { SplishIpc } from "./SplishIpc";
 import "./App.css";
 
 const App = () => {
-  const classSynthesizedTextVisible = {
-    visible: "synthesizedText visibleText",
-    invisible: "synthesizedText invisibleText",
+  const classTextVisible = {
+    visible: "visibleText",
+    invisible: "invisibleText",
   };
 
   const [synthesizedText, setSynthesizedText] = useState("");
@@ -17,7 +17,7 @@ const App = () => {
     useState(true);
   const [playButtonDisabled, setPlayButtonDisabled] = useState(true);
   const [synthesizedTextClass, setSynthesizedTextClass] = useState(
-    classSynthesizedTextVisible.visible
+    "synthesizedText " + classTextVisible.visible
   );
 
   useEffect(() => {
@@ -72,9 +72,9 @@ const App = () => {
 
   const onClickSynthesizedText = () => {
     setSynthesizedTextClass(
-      synthesizedTextClass === classSynthesizedTextVisible.visible
-        ? classSynthesizedTextVisible.invisible
-        : classSynthesizedTextVisible.visible
+      synthesizedTextClass === "synthesizedText " + classTextVisible.visible
+        ? "synthesizedText " + classTextVisible.invisible
+        : "synthesizedText " + classTextVisible.visible
     );
   };
 
