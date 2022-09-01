@@ -4,7 +4,7 @@ import { SplishIpc } from "./SplishIpc";
 
 import "./App.css";
 
-function App() {
+const App = () => {
   const classSynthesizedTextVisible = {
     visible: "synthesizedText visibleText",
     invisible: "synthesizedText invisibleText",
@@ -116,6 +116,6 @@ function App() {
       </button>
     </div>
   );
-}
+};
 
 export default App;
