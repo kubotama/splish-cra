@@ -1,3 +1,5 @@
+import { SynthesizedInfo } from "../../electron/electron";
+
 export declare global {
   interface Window {
     splish: {
