@@ -1,10 +1,21 @@
 {
   "compilerOptions": {
     "target": "ESNext",
+    "strict": true,
     "module": "commonjs",
+    "declaration": true,
+    "declarationMap": true,
     "sourceMap": true,
     "outDir": "../build",
-    "rootDir": "../"
+    "rootDir": "../",
+    "exactOptionalPropertyTypes": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
   },
   "include": ["*"]
 }

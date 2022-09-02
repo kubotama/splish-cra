@@ -1,54 +1,62 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { SplishIpc } from "./SplishIpc";
 
 import "./App.css";
 
-function App() {
-  const classSynthesizedTextVisible = {
-    visible: "synthesizedText visibleText",
-    invisible: "synthesizedText invisibleText",
+const App = () => {
+  const classTextVisible = {
+    visible: "visibleText",
+    invisible: "invisibleText",
   };
 
   const [synthesizedText, setSynthesizedText] = useState("");
   const [speechFilename, setSpeechFilename] = useState("");
   const [inputText, setInputText] = useState("");
-  const [synthesizeButtonDisabled, setSynthesizeButtonDisabled] =
-    useState(true);
+  const [synthesizeButtonDisabled, setSynthesizeButtonDisabled] = useState(true);
   const [playButtonDisabled, setPlayButtonDisabled] = useState(true);
   const [synthesizedTextClass, setSynthesizedTextClass] = useState(
-    classSynthesizedTextVisible.visible
+    ["synthesizedText", classTextVisible.visible].join(" "),
   );
-
-  useEffect(() => {
-    SplishIpc.loadConfiguration().then((synthesizedInfo) => {
-      setSynthesizedText(synthesizedInfo.text);
-      setSFandPBD(synthesizedInfo.filename);
-    });
-  }, []);
-
-  const onChangeInputText = (e: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    setInputText(e.target.value);
-    const text = e.target.value.toString();
-    setSynthesizeButtonDisabled(text.length === 0 ? true : false);
-  };
-
-  const onClickSynthesizeButton = async () => {
-    const text = inputText.replace(/’/g, "'");
-    setPlayButtonDisabled(true);
-    SplishIpc.textToSynthesize(text).then((filename) => {
-      setSFandPBD(filename);
-    });
-    setSynthesizedText(text);
-    setInputText("");
-    setSynthesizeButtonDisabled(true);
-  };
 
   const setSFandPBD = (filename: string) => {
     setSpeechFilename(filename);
-    setPlayButtonDisabled(filename.length === 0 ? true : false);
+    setPlayButtonDisabled(filename.length === 0);
+  };
+
+  useEffect(() => {
+    SplishIpc.loadConfiguration().then(
+      (synthesizedInfo) => {
+        setSynthesizedText(synthesizedInfo.text);
+        setSFandPBD(synthesizedInfo.filename);
+      },
+      () => {
+        setSynthesizedText("");
+        setSFandPBD("");
+      },
+    );
+  }, []);
+
+  const onChangeInputText = (e: { target: { value: React.SetStateAction<string> } }) => {
+    setInputText(e.target.value);
+    const text = e.target.value.toString();
+    setSynthesizeButtonDisabled(text.length === 0);
+  };
+
+  const onClickSynthesizeButton = () => {
+    const text = inputText.replace(/’/g, "'");
+    setPlayButtonDisabled(true);
+    SplishIpc.textToSynthesize(text).then(
+      (filename) => {
+        setSFandPBD(filename);
+      },
+      () => {
+        setSFandPBD("");
+      },
+    );
+    setSynthesizedText(text);
+    setInputText("");
+    setSynthesizeButtonDisabled(true);
   };
 
   const playAudio = async (buffer: Buffer) => {
@@ -57,24 +65,30 @@ function App() {
     source.buffer = await ctx.decodeAudioData(buffer.buffer);
     source.connect(ctx.destination);
     source.start();
-    source.onended = (_event) => {
+    source.onended = () => {
       source.onended = null;
       setPlayButtonDisabled(false);
     };
   };
 
-  const onClickPlayButton = async () => {
+  const onClickPlayButton = () => {
     setPlayButtonDisabled(true);
-    window.splish.readAudioFile(speechFilename).then(async (buffer) => {
-      playAudio(buffer);
-    });
+    window.splish.readAudioFile(speechFilename).then(
+      async (buffer) => {
+        await playAudio(buffer);
+      },
+      () => {
+        setSynthesizedText("");
+        setSFandPBD("");
+      },
+    );
   };
 
   const onClickSynthesizedText = () => {
     setSynthesizedTextClass(
-      synthesizedTextClass === classSynthesizedTextVisible.visible
-        ? classSynthesizedTextVisible.invisible
-        : classSynthesizedTextVisible.visible
+      synthesizedTextClass === ["synthesizedText", classTextVisible.visible].join(" ")
+        ? ["synthesizedText", classTextVisible.invisible].join(" ")
+        : ["synthesizedText", classTextVisible.visible].join(" "),
     );
   };
 
@@ -107,15 +121,11 @@ function App() {
       <div hidden data-testid="synthesizedFilename">
         {speechFilename}
       </div>
-      <button
-        className="playButton"
-        disabled={playButtonDisabled}
-        onClick={onClickPlayButton}
-      >
+      <button className="playButton" disabled={playButtonDisabled} onClick={onClickPlayButton}>
         再生
       </button>
     </div>
   );
-}
+};
 
 export default App;
