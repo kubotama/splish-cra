@@ -11,12 +11,6 @@
     "electron:build:nis": "npm run build && tsc -p electron && electron-builder --linux --x64",
     "electron:dev": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && tsc -p electron -w\" \"wait-on http://localhost:3000 && tsc -p electron && electron .\""
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "browserslist": {
     "production": [
       "last 1 electron version"
@@ -27,6 +21,7 @@
   },
   "dependencies": {
     "@google-cloud/text-to-speech": "^4.0.2",
+    "eslint-plugin-react": "^7.31.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -39,10 +34,17 @@
     "@types/node": "^18.7.13",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
+    "@typescript-eslint/eslint-plugin": "^5.36.1",
+    "@typescript-eslint/parser": "^5.36.1",
     "concurrently": "^7.3.0",
     "cross-env": "^7.0.3",
     "electron": "^20.1.0",
     "electron-builder": "^23.3.3",
+    "eslint": "^8.23.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-import-resolver-typescript": "^3.5.0",
+    "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "react-scripts": "^5.0.1",
     "typescript": "^4.8.2",
