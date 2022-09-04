@@ -12,7 +12,7 @@ import { SplishIpc } from "../SplishIpc";
 jest.mock("../SplishIpc.ts");
 const mockSplishIpc = SplishIpc as jest.Mocked<typeof SplishIpc>;
 
-describe("入力したテキストから音声に合成する。", () => {
+describe.skip("入力したテキストから音声に合成する。", () => {
   test("テキストの入力エリアと合成ボタンが表示されている。", () => {
     // Arrange
     mockSplishIpc.loadConfiguration.mockResolvedValue({
