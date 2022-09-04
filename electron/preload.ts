@@ -1,7 +1,5 @@
 import { SynthesizedInfo } from "./electron";
 
-/* eslint-disable @typescript-eslint/no-namespace */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { IpcRenderer, ipcRenderer, contextBridge } from "electron";
 
 contextBridge.exposeInMainWorld("splish", {

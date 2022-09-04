@@ -1,6 +1,5 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 import * as path from "path";
-import * as url from "url";
 import * as fs from "fs";
 
 import { TextToSpeechClient } from "@google-cloud/text-to-speech";
@@ -8,19 +7,15 @@ import { google } from "@google-cloud/text-to-speech/build/protos/protos";
 
 const createWindow = () => {
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1200,
+    height: 1080,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
     },
   });
 
   const appURL = app.isPackaged
-    ? url.format({
-        pathname: path.join(__dirname, "../index.html"),
-        protocol: "file:",
-        slashes: true,
-      })
+    ? "file://" + path.join(__dirname, "../index.html")
     : "http://localhost:3000";
 
   win.loadURL(appURL);
