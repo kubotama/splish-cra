@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
+
 import { SplishIpc } from "./SplishIpc";
 
 import "./App.css";
@@ -92,6 +94,14 @@ const App = () => {
     );
   };
 
+  const rows: GridRowsProp = [];
+
+  const columns: GridColDef[] = [
+    { field: "col1", headerName: "合成した日時", width: 150 },
+    { field: "col2", headerName: "合成したテキスト", width: 950 },
+    { field: "col3", headerName: "文字数", width: 90 },
+  ];
+
   return (
     <div className="App">
       <header className="App-header">SPLISH</header>
@@ -124,6 +134,16 @@ const App = () => {
       <button className="playButton" disabled={playButtonDisabled} onClick={onClickPlayButton}>
         再生
       </button>
+      <div style={{ height: 350, width: "100%" }}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          rowHeight={20}
+          headerHeight={25}
+          autoHeight={true}
+          rowsPerPageOptions={[10]}
+        />
+      </div>
     </div>
   );
 };
