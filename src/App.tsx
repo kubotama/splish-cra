@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 
-import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
 import { SplishIpc } from "./SplishIpc";
+import { SynthesizedRow } from "../electron/electron";
 
 import "./App.css";
 
@@ -20,6 +21,7 @@ const App = () => {
   const [synthesizedTextClass, setSynthesizedTextClass] = useState(
     ["synthesizedText", classTextVisible.visible].join(" "),
   );
+  const [synthesizedRows, setSynthesizedRows] = useState<SynthesizedRow[]>([]);
 
   const setSFandPBD = (filename: string) => {
     setSpeechFilename(filename);
@@ -49,8 +51,9 @@ const App = () => {
     const text = inputText.replace(/’/g, "'");
     setPlayButtonDisabled(true);
     SplishIpc.textToSynthesize(text).then(
-      (filename) => {
-        setSFandPBD(filename);
+      (rows) => {
+        setSynthesizedRows(rows);
+        setSFandPBD(rows && rows.length > 0 && rows[0]?.filename ? rows[0].filename : "");
       },
       () => {
         setSFandPBD("");
@@ -94,12 +97,12 @@ const App = () => {
     );
   };
 
-  const rows: GridRowsProp = [];
+  // const rows: GridRowsProp = [];
 
   const columns: GridColDef[] = [
-    { field: "col1", headerName: "合成した日時", width: 150 },
-    { field: "col2", headerName: "合成したテキスト", width: 950 },
-    { field: "col3", headerName: "文字数", width: 90 },
+    { field: "synthesizedTime", headerName: "合成した日時", width: 150 },
+    { field: "synthesizedTruncatedText", headerName: "合成したテキスト", width: 950 },
+    { field: "textCount", headerName: "文字数", width: 90 },
   ];
 
   return (
@@ -136,7 +139,7 @@ const App = () => {
       </button>
       <div style={{ height: 350, width: "100%" }}>
         <DataGrid
-          rows={rows}
+          rows={synthesizedRows}
           columns={columns}
           rowHeight={20}
           headerHeight={25}
