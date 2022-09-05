@@ -97,9 +97,9 @@ const App = () => {
   const rows: GridRowsProp = [];
 
   const columns: GridColDef[] = [
-    { field: "col1", headerName: "合成した日時", width: 150 },
-    { field: "col2", headerName: "合成したテキスト", width: 950 },
-    { field: "col3", headerName: "文字数", width: 90 },
+    { field: "synthesizedTime", headerName: "合成した日時", width: 150 },
+    { field: "synthesizedTruncatedText", headerName: "合成したテキスト", width: 950 },
+    { field: "textCount", headerName: "文字数", width: 90 },
   ];
 
   return (
