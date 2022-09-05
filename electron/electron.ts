@@ -1,3 +1,4 @@
+// import { SynthesizedRow } from "./electron";
 import { app, BrowserWindow, ipcMain } from "electron";
 import * as path from "path";
 import * as fs from "fs";
@@ -7,6 +8,8 @@ import { TextToSpeechClient } from "@google-cloud/text-to-speech";
 import { google } from "@google-cloud/text-to-speech/build/protos/protos";
 
 const createWindow = () => {
+  let synthesizedRows: SynthesizedRow[] = [];
+
   const win = new BrowserWindow({
     width: 1200,
     height: 1080,
@@ -39,7 +42,8 @@ const createWindow = () => {
   ipcMain.handle("textToSynthesize", async (_event: Electron.IpcMainInvokeEvent, text: string) => {
     // const filename = "./speech.mp3";
     const synthesizedTime = new Date();
-    const filename = format(synthesizedTime, "yyyyMMddHHmmssSSS").concat(".mp3");
+    const id = format(synthesizedTime, "yyyyMMddHHmmssSSS");
+    const filename = id.concat(".mp3");
 
     const client = new TextToSpeechClient();
 
@@ -64,7 +68,19 @@ const createWindow = () => {
       const synthesizedInfo = { text, filename };
       fs.writeFileSync("splish.json", JSON.stringify(synthesizedInfo));
     }
-    return filename;
+    const TRUNCATE_LEMGTH = 140;
+    synthesizedRows = [
+      {
+        id,
+        synthesizedTime: format(synthesizedTime, "yyyy/MM/dd HH:mm"),
+        synthesizedText: text,
+        synthesizedTruncatedText: text.substring(0, TRUNCATE_LEMGTH).concat(text.length > TRUNCATE_LEMGTH ? "..." : ""),
+        textCount: text.length,
+        filename,
+      },
+      ...synthesizedRows,
+    ];
+    return synthesizedRows;
   });
 
   ipcMain.handle("readAudioFile", (_event: Electron.IpcMainInvokeEvent, filename: string) => {
@@ -87,5 +103,14 @@ app.whenReady().then(() => {
 
 export type SynthesizedInfo = {
   text: string;
+  filename: string;
+};
+
+export type SynthesizedRow = {
+  id: string;
+  synthesizedTime: string;
+  synthesizedText: string;
+  synthesizedTruncatedText: string;
+  textCount: number;
   filename: string;
 };

@@ -1,7 +1,8 @@
-import { SynthesizedInfo } from "../electron/electron";
+import { SynthesizedInfo, SynthesizedRow } from "../electron/electron";
 
 export const SplishIpc = {
   loadConfiguration: async (): Promise<SynthesizedInfo> => window.splish.loadConfiguration(),
-  textToSynthesize: async (text: string): Promise<string> => window.splish.textToSynthesize(text),
+  textToSynthesize: async (text: string): Promise<SynthesizedRow[]> =>
+    window.splish.textToSynthesize(text),
   readAudioFile: async (filename: string): Promise<Buffer> => window.splish.readAudioFile(filename),
 };
