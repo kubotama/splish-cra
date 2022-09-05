@@ -1,6 +1,7 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 import * as path from "path";
 import * as fs from "fs";
+import { format } from "date-fns";
 
 import { TextToSpeechClient } from "@google-cloud/text-to-speech";
 import { google } from "@google-cloud/text-to-speech/build/protos/protos";
@@ -36,7 +37,9 @@ const createWindow = () => {
   });
 
   ipcMain.handle("textToSynthesize", async (_event: Electron.IpcMainInvokeEvent, text: string) => {
-    const filename = "./speech.mp3";
+    // const filename = "./speech.mp3";
+    const synthesizedTime = new Date();
+    const filename = format(synthesizedTime, "yyyyMMddHHmmssSSS").concat(".mp3");
 
     const client = new TextToSpeechClient();
 
