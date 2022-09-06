@@ -28,17 +28,22 @@ const App = () => {
     setPlayButtonDisabled(filename.length === 0);
   };
 
+  const setFirstRowForPlay = (rows: SynthesizedRow[]) => {
+    setSynthesizedRows(rows);
+    setSFandPBD(rows && rows.length > 0 && rows[0]?.filename ? rows[0].filename : "");
+  };
+
   useEffect(() => {
     SplishIpc.loadConfiguration().then(
-      (synthesizedInfo) => {
-        setSynthesizedText(synthesizedInfo.text);
-        setSFandPBD(synthesizedInfo.filename);
+      (rows) => {
+        setFirstRowForPlay(rows);
       },
       () => {
         setSynthesizedText("");
         setSFandPBD("");
       },
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onChangeInputText = (e: { target: { value: React.SetStateAction<string> } }) => {
@@ -52,8 +57,7 @@ const App = () => {
     setPlayButtonDisabled(true);
     SplishIpc.textToSynthesize(text).then(
       (rows) => {
-        setSynthesizedRows(rows);
-        setSFandPBD(rows && rows.length > 0 && rows[0]?.filename ? rows[0].filename : "");
+        setFirstRowForPlay(rows);
       },
       () => {
         setSFandPBD("");
@@ -96,8 +100,6 @@ const App = () => {
         : ["synthesizedText", classTextVisible.visible].join(" "),
     );
   };
-
-  // const rows: GridRowsProp = [];
 
   const columns: GridColDef[] = [
     { field: "synthesizedTime", headerName: "合成した日時", width: 150 },

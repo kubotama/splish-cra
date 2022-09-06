@@ -20,10 +20,7 @@ describe.skip("合成した音声を再生する。", () => {
 
   test("再生ボタンが表示されている。", () => {
     // Arrange
-    mockSplishIpc.loadConfiguration.mockResolvedValue({
-      text: "",
-      filename: "",
-    });
+    mockSplishIpc.loadConfiguration.mockResolvedValue([]);
     render(<App />);
     const playButton = screen.getByRole("button", { name: "再生" });
 
@@ -36,10 +33,7 @@ describe.skip("合成した音声を再生する。", () => {
 
   test("splish.jsonのfilenameが設定されていない場合には無効になる。", () => {
     // Arrange
-    mockSplishIpc.loadConfiguration.mockResolvedValue({
-      text: "",
-      filename: "",
-    });
+    mockSplishIpc.loadConfiguration.mockResolvedValue([]);
     render(<App />);
     const playButton = screen.getByRole("button", { name: "再生" });
 
@@ -52,10 +46,7 @@ describe.skip("合成した音声を再生する。", () => {
 
   test.skip("splish.jsonのfilenameが設定されている場合には再生ボタンが有効になる。", () => {
     // Arrange
-    mockSplishIpc.loadConfiguration.mockResolvedValue({
-      text: "",
-      filename: "speech.mp3",
-    });
+    mockSplishIpc.loadConfiguration.mockResolvedValue([]);
     render(<App />);
     const playButton = screen.getByRole("button", { name: "再生" });
 
@@ -68,10 +59,7 @@ describe.skip("合成した音声を再生する。", () => {
 
   test.skip("再生ボタンをクリックすると、再生ボタンが無効になる。", async () => {
     // Arrange
-    mockSplishIpc.loadConfiguration.mockResolvedValue({
-      text: "",
-      filename: "speech.mp3",
-    });
+    mockSplishIpc.loadConfiguration.mockResolvedValue([]);
     const buffer = fs.readFileSync("speech.mp3");
     mockSplishIpc.readAudioFile.mockResolvedValue(buffer);
     render(<App />);

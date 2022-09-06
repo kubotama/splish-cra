@@ -23,24 +23,20 @@ const createWindow = () => {
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   win.loadURL(appURL);
 
-  // if (!app.isPackaged) {
-  //   win.webContents.openDevTools();
-  // }
-
   ipcMain.handle("loadConfiguration", (_event: Electron.IpcMainInvokeEvent) => {
     const filename = "splish.json";
     if (fs.existsSync(filename) === false) {
-      fs.writeFileSync(filename, JSON.stringify({ text: "", filename: "" }));
+      fs.writeFileSync(filename, JSON.stringify([]));
     }
-    const synthesizedInfo = fs.readFileSync("splish.json", {
-      encoding: "utf8",
-    });
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return JSON.parse(synthesizedInfo);
+    synthesizedRows = JSON.parse(
+      fs.readFileSync("splish.json", {
+        encoding: "utf8",
+      }),
+    ) as SynthesizedRow[];
+    return synthesizedRows;
   });
 
   ipcMain.handle("textToSynthesize", async (_event: Electron.IpcMainInvokeEvent, text: string) => {
-    // const filename = "./speech.mp3";
     const synthesizedTime = new Date();
     const id = format(synthesizedTime, "yyyyMMddHHmmssSSS");
     const filename = id.concat(".mp3");
@@ -64,22 +60,22 @@ const createWindow = () => {
     if (response.audioContent) {
       fs.writeFileSync(filename, response.audioContent);
 
-      // 設定ファイル(splish.json)に合成したテキストと保存したファイル名を記録する
-      const synthesizedInfo = { text, filename };
-      fs.writeFileSync("splish.json", JSON.stringify(synthesizedInfo));
+      const TRUNCATE_LEMGTH = 140;
+      synthesizedRows = [
+        {
+          id,
+          synthesizedTime: format(synthesizedTime, "yyyy/MM/dd HH:mm"),
+          synthesizedText: text,
+          synthesizedTruncatedText: text
+            .substring(0, TRUNCATE_LEMGTH)
+            .concat(text.length > TRUNCATE_LEMGTH ? "..." : ""),
+          textCount: text.length,
+          filename,
+        },
+        ...synthesizedRows,
+      ];
+      fs.writeFileSync("splish.json", JSON.stringify(synthesizedRows));
     }
-    const TRUNCATE_LEMGTH = 140;
-    synthesizedRows = [
-      {
-        id,
-        synthesizedTime: format(synthesizedTime, "yyyy/MM/dd HH:mm"),
-        synthesizedText: text,
-        synthesizedTruncatedText: text.substring(0, TRUNCATE_LEMGTH).concat(text.length > TRUNCATE_LEMGTH ? "..." : ""),
-        textCount: text.length,
-        filename,
-      },
-      ...synthesizedRows,
-    ];
     return synthesizedRows;
   });
 
