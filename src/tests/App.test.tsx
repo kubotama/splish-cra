@@ -11,10 +11,7 @@ jest.mock("../SplishIpc.ts");
 const mockSplishIpc = SplishIpc as jest.Mocked<typeof SplishIpc>;
 
 test.skip("タイトルの表示", () => {
-  mockSplishIpc.loadConfiguration.mockResolvedValue({
-    text: "",
-    filename: "",
-  });
+  mockSplishIpc.loadConfiguration.mockResolvedValue([]);
 
   // eslint-disable-next-line testing-library/no-unnecessary-act
   act(() => {

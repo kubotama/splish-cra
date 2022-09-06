@@ -18,10 +18,7 @@ describe.skip("起動時に、直前に音声に合成したテキストと、�
 
   test("テキストとファイル名の領域が存在する。", () => {
     // Arrange
-    mockSplishIpc.loadConfiguration.mockResolvedValue({
-      text: "",
-      filename: "",
-    });
+    mockSplishIpc.loadConfiguration.mockResolvedValue([]);
 
     // Act
     // eslint-disable-next-line testing-library/no-unnecessary-act
@@ -41,10 +38,7 @@ describe.skip("起動時に、直前に音声に合成したテキストと、�
 
   test("splish.jsonがない場合には、テキストとファイル名とも''にを設定する。", () => {
     // Arrange
-    mockSplishIpc.loadConfiguration.mockResolvedValue({
-      text: "",
-      filename: "",
-    });
+    mockSplishIpc.loadConfiguration.mockResolvedValue([]);
 
     // Act
     // eslint-disable-next-line testing-library/no-unnecessary-act
@@ -64,10 +58,11 @@ describe.skip("起動時に、直前に音声に合成したテキストと、�
 
   test("splish.jsonがある場合には、splish.jsonのテキストとファイル名を設定する。", async () => {
     // Arrange
-    mockSplishIpc.loadConfiguration.mockResolvedValue({
-      text: "Before we can enable the visualizations, we need to install the Lighthouse plugin. Skip this step if you're already using it! Otherwise, navigate to Plugins and search for Lighthouse. Click Install.",
-      filename: "speech.mp3",
-    });
+    // mockSplishIpc.loadConfiguration.mockResolvedValue({
+    //   text: "Before we can enable the visualizations, we need to install the Lighthouse plugin. Skip this step if you're already using it! Otherwise, navigate to Plugins and search for Lighthouse. Click Install.",
+    //   filename: "speech.mp3",
+    // });
+    mockSplishIpc.loadConfiguration.mockResolvedValue([]);
 
     // Act
     // eslint-disable-next-line testing-library/no-unnecessary-act

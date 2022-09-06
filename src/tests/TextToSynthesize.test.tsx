@@ -15,10 +15,7 @@ const mockSplishIpc = SplishIpc as jest.Mocked<typeof SplishIpc>;
 describe.skip("入力したテキストから音声に合成する。", () => {
   test("テキストの入力エリアと合成ボタンが表示されている。", () => {
     // Arrange
-    mockSplishIpc.loadConfiguration.mockResolvedValue({
-      text: "",
-      filename: "",
-    });
+    mockSplishIpc.loadConfiguration.mockResolvedValue([]);
 
     // Act
     // eslint-disable-next-line testing-library/no-unnecessary-act
@@ -38,10 +35,7 @@ describe.skip("入力したテキストから音声に合成する。", () => {
 
   test("テキストの入力エリアに文字列が入力されていないときは合成ボタンが無効である。", () => {
     // Arrange
-    mockSplishIpc.loadConfiguration.mockResolvedValue({
-      text: "",
-      filename: "",
-    });
+    mockSplishIpc.loadConfiguration.mockResolvedValue([]);
 
     // Act
     // eslint-disable-next-line testing-library/no-unnecessary-act
@@ -59,15 +53,11 @@ describe.skip("入力したテキストから音声に合成する。", () => {
 
   test("テキストの入力エリアに文字列が入力されているときは合成ボタンが有効である。", async () => {
     // Arrange
-    mockSplishIpc.loadConfiguration.mockResolvedValue({
-      text: "",
-      filename: "",
-    });
+    mockSplishIpc.loadConfiguration.mockResolvedValue([]);
     render(<App />);
     // const inputText = screen.getByTestId("inputText");
     const inputText = screen.getByPlaceholderText("合成するテキストを入力して下さい");
-    const text =
-      "Today's Changelog brings improved date filtering and the command palette (beta) to Projects!";
+    const text = "Today's Changelog brings improved date filtering and the command palette (beta) to Projects!";
 
     // Act
     // テキストの入力エリアに文字列を入力する
@@ -82,10 +72,8 @@ describe.skip("入力したテキストから音声に合成する。", () => {
 
   test.each([
     {
-      input:
-        "Today's Changelog brings improved date filtering and the command palette (beta) to Projects!",
-      expected:
-        "Today's Changelog brings improved date filtering and the command palette (beta) to Projects!",
+      input: "Today's Changelog brings improved date filtering and the command palette (beta) to Projects!",
+      expected: "Today's Changelog brings improved date filtering and the command palette (beta) to Projects!",
     },
     {
       input:
@@ -101,10 +89,7 @@ describe.skip("入力したテキストから音声に合成する。", () => {
     "テキストの入力エリアに文字列が入力されているときに合成ボタンをクリックする: $input",
     async ({ input, expected }) => {
       // Arrange
-      mockSplishIpc.loadConfiguration.mockResolvedValue({
-        text: "",
-        filename: "",
-      });
+      mockSplishIpc.loadConfiguration.mockResolvedValue([]);
       // mockSplishIpc.textToSynthesize.mockResolvedValue("speech.mp3");
       render(<App />);
       // const inputText = screen.getByTestId("inputText");
