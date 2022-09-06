@@ -30,13 +30,17 @@ const createWindow = () => {
   ipcMain.handle("loadConfiguration", (_event: Electron.IpcMainInvokeEvent) => {
     const filename = "splish.json";
     if (fs.existsSync(filename) === false) {
-      fs.writeFileSync(filename, JSON.stringify({ text: "", filename: "" }));
+      // fs.writeFileSync(filename, JSON.stringify({ text: "", filename: "" }));
+      fs.writeFileSync(filename, JSON.stringify([]));
     }
-    const synthesizedInfo = fs.readFileSync("splish.json", {
-      encoding: "utf8",
-    });
+    synthesizedRows = JSON.parse(
+      fs.readFileSync("splish.json", {
+        encoding: "utf8",
+      }),
+    ) as SynthesizedRow[];
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return JSON.parse(synthesizedInfo);
+    // return JSON.parse(synthesizedRow);
+    return synthesizedRows;
   });
 
   ipcMain.handle("textToSynthesize", async (_event: Electron.IpcMainInvokeEvent, text: string) => {
@@ -61,13 +65,6 @@ const createWindow = () => {
     };
 
     const [response] = await client.synthesizeSpeech(request);
-    if (response.audioContent) {
-      fs.writeFileSync(filename, response.audioContent);
-
-      // 設定ファイル(splish.json)に合成したテキストと保存したファイル名を記録する
-      const synthesizedInfo = { text, filename };
-      fs.writeFileSync("splish.json", JSON.stringify(synthesizedInfo));
-    }
     const TRUNCATE_LEMGTH = 140;
     synthesizedRows = [
       {
@@ -80,6 +77,14 @@ const createWindow = () => {
       },
       ...synthesizedRows,
     ];
+    if (response.audioContent) {
+      fs.writeFileSync(filename, response.audioContent);
+
+      // 設定ファイル(splish.json)に合成したテキストと保存したファイル名を記録する
+      // const synthesizedInfo = { text, filename };
+      // fs.writeFileSync("splish.json", JSON.stringify(synthesizedInfo));
+      fs.writeFileSync("splish.json", JSON.stringify(synthesizedRows));
+    }
     return synthesizedRows;
   });
 

@@ -30,9 +30,9 @@ const App = () => {
 
   useEffect(() => {
     SplishIpc.loadConfiguration().then(
-      (synthesizedInfo) => {
-        setSynthesizedText(synthesizedInfo.text);
-        setSFandPBD(synthesizedInfo.filename);
+      (rows) => {
+        setSynthesizedRows(rows);
+        setSFandPBD(rows && rows.length > 0 && rows[0]?.filename ? rows[0].filename : "");
       },
       () => {
         setSynthesizedText("");
