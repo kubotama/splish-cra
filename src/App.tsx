@@ -101,8 +101,6 @@ const App = () => {
     );
   };
 
-  // const rows: GridRowsProp = [];
-
   const columns: GridColDef[] = [
     { field: "synthesizedTime", headerName: "合成した日時", width: 150 },
     { field: "synthesizedTruncatedText", headerName: "合成したテキスト", width: 950 },
