@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridEventListener } from "@mui/x-data-grid";
 
 import { SplishIpc } from "./SplishIpc";
 import { SynthesizedRow } from "../electron/electron";
@@ -101,6 +101,11 @@ const App = () => {
     );
   };
 
+  const onRowClick: GridEventListener<"rowClick"> = (params) => {
+    setSFandPBD(params.row.filename);
+    setSynthesizedText(params.row.synthesizedText);
+  };
+
   const columns: GridColDef[] = [
     { field: "synthesizedTime", headerName: "合成した日時", width: 150 },
     { field: "synthesizedTruncatedText", headerName: "合成したテキスト", width: 950 },
@@ -147,6 +152,7 @@ const App = () => {
           headerHeight={25}
           autoHeight={true}
           rowsPerPageOptions={[10]}
+          onRowClick={onRowClick}
         />
       </div>
     </div>
