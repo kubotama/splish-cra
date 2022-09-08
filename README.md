@@ -35,7 +35,25 @@ Electron はマルチプロセスアーキテクチャを採用していて、�
 
 #### テキストから音声を合成
 
-レンダラープロセスで入力したテキストを、メインプロセスで音声に合成して、ファイルに保存します。メインプロセスは保存したファイル名をレンダラープロセスに戻します。この処理に関係するプロセス間通信は textToSynthesize が担当します。string 型の引数は、音声を合成するテキストです。戻り値は音声を合成した日時、テキスト、保存したファイル名の配列です。
+レンダラープロセスで入力したテキストを、メインプロセスで音声に合成して、ファイルに保存します。この処理に関係するプロセス間通信は textToSynthesize が担当します。string 型の引数は、音声を合成するテキストです。戻り値は音声を合成した日時、テキスト、保存したファイル名の配列です。
+
+音声を合成するときのオプションは以下のように設定しています。
+
+| カテゴリ    | オプション       | 設定されている値       |
+| ----------- | ---------------- | ---------------------- |
+| voice       | languageCode     | en-US                  |
+| voice       | ssmlGender       | NEUTRAL                |
+| voice       | name             | en-US-Standard-J       |
+| audioConfig | audioEncoding    | MP3                    |
+| audioConfig | effectsProfileId | headphone-class-device |
+
+オプションについては
+
+[TextToSpeech - Documentation](https://googleapis.dev/nodejs/text-to-speech/latest/google.cloud.texttospeech.v1.TextToSpeech.html#synthesizeSpeech2)がドキュメントのはずですが、具体的にどのような値を設定すればいいのか、があまり詳しく書かれていません。
+
+audioConfig カテゴリは、[Package google.cloud.texttospeech.v1  |  Cloud Text-to-Speech Documentation  |  Google Cloud](https://cloud.google.com/text-to-speech/docs/reference/rpc/google.cloud.texttospeech.v1#audioconfig)が参考になります。
+
+[Text-to-Speech: Lifelike Speech Synthesis](https://cloud.google.com/text-to-speech)のデモで、show JSON をクリックすると REST API に送信するデータを確認できます。こちらも参考になります。
 
 #### 合成した音声を再生
 
