@@ -30,7 +30,7 @@ const App = () => {
 
   const setFirstRowForPlay = (rows: SynthesizedRow[]) => {
     setSynthesizedRows(rows);
-    setSFandPBD(rows && rows.length > 0 && rows[0]?.filename ? rows[0].filename : "");
+    setSFandPBD(rows && rows.length > 0 && rows[0]?.filename ? rows[0]?.filename : "");
   };
 
   useEffect(() => {
@@ -102,7 +102,11 @@ const App = () => {
   };
 
   const onRowClick: GridEventListener<"rowClick"> = (params) => {
+    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
     setSFandPBD(params.row.filename);
+    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
     setSynthesizedText(params.row.synthesizedText);
   };
 
