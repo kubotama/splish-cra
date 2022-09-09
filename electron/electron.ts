@@ -1,11 +1,11 @@
 // import { SynthesizedRow } from "./electron";
-import { app, BrowserWindow, ipcMain } from "electron";
-import * as path from "path";
 import * as fs from "fs";
-import { format } from "date-fns";
+import * as path from "path";
 
 import { TextToSpeechClient } from "@google-cloud/text-to-speech";
 import { google } from "@google-cloud/text-to-speech/build/protos/protos";
+import { format } from "date-fns";
+import { app, BrowserWindow, ipcMain } from "electron";
 
 const createWindow = () => {
   let synthesizedRows: SynthesizedRow[] = [];
@@ -18,12 +18,13 @@ const createWindow = () => {
     },
   });
 
-  const appURL = app.isPackaged ? ["file://", path.join(__dirname, "../index.html")].join("") : "http://localhost:3000";
+  const appURL = app.isPackaged
+    ? ["file://", path.join(__dirname, "../index.html")].join("")
+    : "http://localhost:3000";
 
-  // eslint-disable-next-line @typescript-eslint/no-floating-promises
   win.loadURL(appURL);
 
-  ipcMain.handle("loadConfiguration", (_event: Electron.IpcMainInvokeEvent) => {
+  ipcMain.handle("loadConfiguration", () => {
     const filename = "splish.json";
     if (fs.existsSync(filename) === false) {
       fs.writeFileSync(filename, JSON.stringify([]));
@@ -36,60 +37,65 @@ const createWindow = () => {
     return synthesizedRows;
   });
 
-  ipcMain.handle("textToSynthesize", async (_event: Electron.IpcMainInvokeEvent, text: string) => {
-    const synthesizedTime = new Date();
-    const id = format(synthesizedTime, "yyyyMMddHHmmssSSS");
-    const filename = id.concat(".mp3");
+  ipcMain.handle(
+    "textToSynthesize",
+    async (_event: Electron.IpcMainInvokeEvent, text: string) => {
+      const synthesizedTime = new Date();
+      const id = format(synthesizedTime, "yyyyMMddHHmmssSSS");
+      const filename = id.concat(".mp3");
 
-    const client = new TextToSpeechClient();
+      const client = new TextToSpeechClient();
 
-    const request: google.cloud.texttospeech.v1.ISynthesizeSpeechRequest = {
-      input: { text },
-      voice: {
-        languageCode: "en-US",
-        ssmlGender: "NEUTRAL",
-        name: "en-US-Standard-J",
-      },
-      audioConfig: {
-        audioEncoding: "MP3",
-        effectsProfileId: ["headphone-class-device"],
-      },
-    };
-
-    const [response] = await client.synthesizeSpeech(request);
-    if (response.audioContent) {
-      fs.writeFileSync(filename, response.audioContent);
-
-      const TRUNCATE_LEMGTH = 140;
-      synthesizedRows = [
-        {
-          id,
-          synthesizedTime: format(synthesizedTime, "yyyy/MM/dd HH:mm"),
-          synthesizedText: text,
-          synthesizedTruncatedText: text
-            .substring(0, TRUNCATE_LEMGTH)
-            .concat(text.length > TRUNCATE_LEMGTH ? "..." : ""),
-          textCount: text.length,
-          filename,
+      const request: google.cloud.texttospeech.v1.ISynthesizeSpeechRequest = {
+        input: { text },
+        voice: {
+          languageCode: "en-US",
+          ssmlGender: "NEUTRAL",
+          name: "en-US-Standard-J",
         },
-        ...synthesizedRows,
-      ];
-      fs.writeFileSync("splish.json", JSON.stringify(synthesizedRows));
-    }
-    return synthesizedRows;
-  });
+        audioConfig: {
+          audioEncoding: "MP3",
+          effectsProfileId: ["headphone-class-device"],
+        },
+      };
 
-  ipcMain.handle("readAudioFile", (_event: Electron.IpcMainInvokeEvent, filename: string) => {
-    const buffer = fs.readFileSync(filename);
-    return buffer;
-  });
+      const [response] = await client.synthesizeSpeech(request);
+      if (response.audioContent) {
+        fs.writeFileSync(filename, response.audioContent);
+
+        const TRUNCATE_LEMGTH = 140;
+        synthesizedRows = [
+          {
+            id,
+            synthesizedTime: format(synthesizedTime, "yyyy/MM/dd HH:mm"),
+            synthesizedText: text,
+            synthesizedTruncatedText: text
+              .substring(0, TRUNCATE_LEMGTH)
+              .concat(text.length > TRUNCATE_LEMGTH ? "..." : ""),
+            textCount: text.length,
+            filename,
+          },
+          ...synthesizedRows,
+        ];
+        fs.writeFileSync("splish.json", JSON.stringify(synthesizedRows));
+      }
+      return synthesizedRows;
+    },
+  );
+
+  ipcMain.handle(
+    "readAudioFile",
+    (_event: Electron.IpcMainInvokeEvent, filename: string) => {
+      const buffer = fs.readFileSync(filename);
+      return buffer;
+    },
+  );
 };
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") app.quit();
 });
 
-// eslint-disable-next-line @typescript-eslint/no-floating-promises
 app.whenReady().then(() => {
   createWindow();
   app.on("activate", () => {

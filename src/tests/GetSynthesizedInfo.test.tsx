@@ -1,11 +1,8 @@
-/* eslint-disable object-curly-newline */
-/* eslint-disable react/react-in-jsx-scope */
-/* eslint-disable import/no-extraneous-dependencies */
 import { render, screen, act, waitFor } from "@testing-library/react";
-import App from "../App";
 
 import "@testing-library/jest-dom";
 
+import App from "../App";
 import { SplishIpc } from "../SplishIpc";
 
 jest.mock("../SplishIpc.ts");
@@ -21,7 +18,6 @@ describe.skip("起動時に、直前に音声に合成したテキストと、�
     mockSplishIpc.loadConfiguration.mockResolvedValue([]);
 
     // Act
-    // eslint-disable-next-line testing-library/no-unnecessary-act
     act(() => {
       render(<App />);
     });
@@ -41,7 +37,6 @@ describe.skip("起動時に、直前に音声に合成したテキストと、�
     mockSplishIpc.loadConfiguration.mockResolvedValue([]);
 
     // Act
-    // eslint-disable-next-line testing-library/no-unnecessary-act
     act(() => {
       render(<App />);
     });
@@ -65,7 +60,6 @@ describe.skip("起動時に、直前に音声に合成したテキストと、�
     mockSplishIpc.loadConfiguration.mockResolvedValue([]);
 
     // Act
-    // eslint-disable-next-line testing-library/no-unnecessary-act
     act(() => {
       render(<App />);
     });

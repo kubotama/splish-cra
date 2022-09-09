@@ -1,9 +1,8 @@
+import { DataGrid, GridColDef, GridEventListener } from "@mui/x-data-grid";
 import React, { useEffect, useState } from "react";
 
-import { DataGrid, GridColDef, GridEventListener } from "@mui/x-data-grid";
-
-import { SplishIpc } from "./SplishIpc";
 import { SynthesizedRow } from "../electron/electron";
+import { SplishIpc } from "./SplishIpc";
 
 import "./App.css";
 
@@ -16,7 +15,8 @@ const App = () => {
   const [synthesizedText, setSynthesizedText] = useState("");
   const [speechFilename, setSpeechFilename] = useState("");
   const [inputText, setInputText] = useState("");
-  const [synthesizeButtonDisabled, setSynthesizeButtonDisabled] = useState(true);
+  const [synthesizeButtonDisabled, setSynthesizeButtonDisabled] =
+    useState(true);
   const [playButtonDisabled, setPlayButtonDisabled] = useState(true);
   const [synthesizedTextClass, setSynthesizedTextClass] = useState(
     ["synthesizedText", classTextVisible.visible].join(" "),
@@ -30,7 +30,9 @@ const App = () => {
 
   const setFirstRowForPlay = (rows: SynthesizedRow[]) => {
     setSynthesizedRows(rows);
-    setSFandPBD(rows && rows.length > 0 && rows[0]?.filename ? rows[0]?.filename : "");
+    setSFandPBD(
+      rows && rows.length > 0 && rows[0]?.filename ? rows[0]?.filename : "",
+    );
   };
 
   useEffect(() => {
@@ -43,10 +45,11 @@ const App = () => {
         setSFandPBD("");
       },
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onChangeInputText = (e: { target: { value: React.SetStateAction<string> } }) => {
+  const onChangeInputText = (e: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
     setInputText(e.target.value);
     const text = e.target.value.toString();
     setSynthesizeButtonDisabled(text.length === 0);
@@ -95,24 +98,25 @@ const App = () => {
 
   const onClickSynthesizedText = () => {
     setSynthesizedTextClass(
-      synthesizedTextClass === ["synthesizedText", classTextVisible.visible].join(" ")
+      synthesizedTextClass ===
+        ["synthesizedText", classTextVisible.visible].join(" ")
         ? ["synthesizedText", classTextVisible.invisible].join(" ")
         : ["synthesizedText", classTextVisible.visible].join(" "),
     );
   };
 
   const onRowClick: GridEventListener<"rowClick"> = (params) => {
-    // eslint-disable-next-line max-len
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
     setSFandPBD(params.row.filename);
-    // eslint-disable-next-line max-len
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
     setSynthesizedText(params.row.synthesizedText);
   };
 
   const columns: GridColDef[] = [
     { field: "synthesizedTime", headerName: "合成した日時", width: 150 },
-    { field: "synthesizedTruncatedText", headerName: "合成したテキスト", width: 950 },
+    {
+      field: "synthesizedTruncatedText",
+      headerName: "合成したテキスト",
+      width: 950,
+    },
     { field: "textCount", headerName: "文字数", width: 90 },
   ];
 
@@ -145,7 +149,11 @@ const App = () => {
       <div hidden data-testid="synthesizedFilename">
         {speechFilename}
       </div>
-      <button className="playButton" disabled={playButtonDisabled} onClick={onClickPlayButton}>
+      <button
+        className="playButton"
+        disabled={playButtonDisabled}
+        onClick={onClickPlayButton}
+      >
         再生
       </button>
       <div style={{ height: 350, width: "100%" }}>
