@@ -1,8 +1,4 @@
-/* eslint-disable max-len */
-/* eslint-disable react/react-in-jsx-scope */
-/* eslint-disable import/no-extraneous-dependencies */
 import { render, screen, act } from "@testing-library/react";
-
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 
@@ -18,7 +14,6 @@ describe.skip("入力したテキストから音声に合成する。", () => {
     mockSplishIpc.loadConfiguration.mockResolvedValue([]);
 
     // Act
-    // eslint-disable-next-line testing-library/no-unnecessary-act
     act(() => {
       render(<App />);
     });
@@ -38,7 +33,6 @@ describe.skip("入力したテキストから音声に合成する。", () => {
     mockSplishIpc.loadConfiguration.mockResolvedValue([]);
 
     // Act
-    // eslint-disable-next-line testing-library/no-unnecessary-act
     act(() => {
       render(<App />);
     });
@@ -56,8 +50,10 @@ describe.skip("入力したテキストから音声に合成する。", () => {
     mockSplishIpc.loadConfiguration.mockResolvedValue([]);
     render(<App />);
     // const inputText = screen.getByTestId("inputText");
-    const inputText = screen.getByPlaceholderText("合成するテキストを入力して下さい");
-    const text = "Today's Changelog brings improved date filtering and the command palette (beta) to Projects!";
+    const inputText =
+      screen.getByPlaceholderText("合成するテキストを入力して下さい");
+    const text =
+      "Today's Changelog brings improved date filtering and the command palette (beta) to Projects!";
 
     // Act
     // テキストの入力エリアに文字列を入力する
@@ -72,8 +68,10 @@ describe.skip("入力したテキストから音声に合成する。", () => {
 
   test.each([
     {
-      input: "Today's Changelog brings improved date filtering and the command palette (beta) to Projects!",
-      expected: "Today's Changelog brings improved date filtering and the command palette (beta) to Projects!",
+      input:
+        "Today's Changelog brings improved date filtering and the command palette (beta) to Projects!",
+      expected:
+        "Today's Changelog brings improved date filtering and the command palette (beta) to Projects!",
     },
     {
       input:
@@ -82,8 +80,10 @@ describe.skip("入力したテキストから音声に合成する。", () => {
         "And if you're new to Lighthouse Scores, or want to learn more about how they're calculated, check out the Developer's Intro to Core Web Vitals.",
     },
     {
-      input: "And if you’re new to Lighthouse Scores, And if you’re new to Lighthouse Scores,",
-      expected: "And if you're new to Lighthouse Scores, And if you're new to Lighthouse Scores,",
+      input:
+        "And if you’re new to Lighthouse Scores, And if you’re new to Lighthouse Scores,",
+      expected:
+        "And if you're new to Lighthouse Scores, And if you're new to Lighthouse Scores,",
     },
   ])(
     "テキストの入力エリアに文字列が入力されているときに合成ボタンをクリックする: $input",
@@ -93,7 +93,8 @@ describe.skip("入力したテキストから音声に合成する。", () => {
       // mockSplishIpc.textToSynthesize.mockResolvedValue("speech.mp3");
       render(<App />);
       // const inputText = screen.getByTestId("inputText");
-      const inputText = screen.getByPlaceholderText("合成するテキストを入力して下さい");
+      const inputText =
+        screen.getByPlaceholderText("合成するテキストを入力して下さい");
       const synthesizeButton = screen.getByTestId("synthesizeButton");
       const synthesizedText = screen.getByTestId("synthesizedText");
       const synthesizedFilename = screen.getByTestId("synthesizedFilename");
