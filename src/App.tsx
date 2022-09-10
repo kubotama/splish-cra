@@ -19,7 +19,7 @@ const App = () => {
     useState(true);
   const [playButtonDisabled, setPlayButtonDisabled] = useState(true);
   const [synthesizedTextClass, setSynthesizedTextClass] = useState(
-    ["synthesizedText", classTextVisible.visible].join(" "),
+    "synthesizedText " + classTextVisible.visible,
   );
   const [synthesizedRows, setSynthesizedRows] = useState<SynthesizedRow[]>([]);
 
@@ -98,10 +98,9 @@ const App = () => {
 
   const onClickSynthesizedText = () => {
     setSynthesizedTextClass(
-      synthesizedTextClass ===
-        ["synthesizedText", classTextVisible.visible].join(" ")
-        ? ["synthesizedText", classTextVisible.invisible].join(" ")
-        : ["synthesizedText", classTextVisible.visible].join(" "),
+      synthesizedTextClass === "synthesizedText " + classTextVisible.visible
+        ? "synthesizedText " + classTextVisible.invisible
+        : "synthesizedText " + classTextVisible.visible,
     );
   };
 
