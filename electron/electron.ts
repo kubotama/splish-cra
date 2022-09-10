@@ -19,7 +19,7 @@ const createWindow = () => {
   });
 
   const appURL = app.isPackaged
-    ? ["file://", path.join(__dirname, "../index.html")].join("")
+    ? "file://" + path.join(__dirname, "../index.html")
     : "http://localhost:3000";
 
   win.loadURL(appURL);
