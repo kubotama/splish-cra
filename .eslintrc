@@ -6,7 +6,13 @@
     "plugin:import/recommended"
   ],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["react", "react-hooks", "@typescript-eslint", "import"],
+  "plugins": [
+    "react",
+    "react-hooks",
+    "@typescript-eslint",
+    "import",
+    "prettier"
+  ],
   "settings": {
     "import/resolver": {
       "typescript": {}
